@@ -2,6 +2,7 @@ import json
 import os
 import boto3
 import torch
+from generate import get_args, generate
 
 sqs = boto3.client('sqs', region_name='ap-northeast-2')
 dynamodb = boto3.client('dynamodb', region_name='ap-northeast-2')
@@ -84,17 +85,11 @@ def lambda_handler(event, context):
         input_texts.append(input_text)
         morph_texts.append(morph_text)
 
-    # morph_texts = str2id(morph_texts)
-    # Make batch
-    # max_len = os.getenv('MAX_LEN')
-    # morph_texts = padding(morph_text, max_len)
-    # morph_texts = 
-    # morph_texts = torch.tensor(morph_texts)
     # Inference
     output_texts = []
     for mt in morph_texts:
-        output = ' '.join(mt)
-        output_texts.append(output)
+        args = get_args(mt)
+        output = generate(args)
     
     for i in range(len(output_texts)):
         tweet_id = tweet_ids[i]

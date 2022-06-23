@@ -2,6 +2,7 @@ import json
 import os
 import boto3
 import torch
+import numpy
 from generate import get_args, generate
 
 sqs = boto3.client('sqs', region_name='ap-northeast-2')
@@ -90,6 +91,7 @@ def lambda_handler(event, context):
     for mt in morph_texts:
         args = get_args(mt)
         output = generate(args)
+        output_texts.append(output)
     
     for i in range(len(output_texts)):
         tweet_id = tweet_ids[i]

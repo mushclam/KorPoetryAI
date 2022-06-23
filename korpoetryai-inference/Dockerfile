@@ -1,10 +1,11 @@
 FROM public.ecr.aws/lambda/python:3.7
 
 COPY lambda_function.py ${LAMBDA_TASK_ROOT}
-COPY model ${LAMBDA_TASK_ROOT}
-COPY utils ${LAMBDA_TASK_ROOT}
-COPY vocab ${LAMBDA_TASK_ROOT}
-COPY checkpoint ${LAMBDA_TASK_ROOT}
+
+COPY model ${LAMBDA_TASK_ROOT}/model
+COPY utils ${LAMBDA_TASK_ROOT}/utils
+COPY vocab ${LAMBDA_TASK_ROOT}/vocab
+COPY checkpoint ${LAMBDA_TASK_ROOT}/checkpoint
 COPY generate.py ${LAMBDA_TASK_ROOT}
 
 COPY requirements.txt .
